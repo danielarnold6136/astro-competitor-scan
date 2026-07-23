@@ -160,24 +160,115 @@ footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--line-soft);
   .tldr ul{gap:13px}
 }
 
-.hubgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:6px}
+:root{
+  --st-done:#4ec9a5; --st-done-dim:rgba(78,201,165,.14);
+  --st-active:#e7b24c; --st-active-dim:rgba(231,178,76,.14);
+  --st-pending:#6f6b8c; --st-pending-dim:rgba(111,107,140,.10);
+  --st-gate:#f0a35e; --st-gate-dim:rgba(240,163,94,.13);
+}
+/* ---------- research cards ---------- */
+.hubgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-top:6px}
 .card{display:block;border:1px solid var(--line);border-radius:14px;background:var(--surface);
-  padding:22px 24px;text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .15s,background .15s}
+  padding:22px 24px;text-decoration:none;transition:border-color .15s,background .15s}
 .card:hover{border-color:var(--gold);background:var(--surface-2)}
-.card .ct{font-family:var(--serif);font-size:20px;color:var(--ink);margin:0 0 6px;line-height:1.25}
+.card .ct{font-family:var(--serif);font-size:19px;color:var(--ink);margin:0 0 6px;line-height:1.25}
 .card .cd{font-size:13.5px;color:var(--ink-2);margin:0 0 12px;line-height:1.5}
 .card .cm{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--gold);text-transform:uppercase}
-.card.soon{opacity:.55;pointer-events:none;border-style:dashed}
-.stagelist{counter-reset:st;list-style:none;padding:0;margin:8px 0 0;max-width:110ch}
-.stagelist>li{counter-increment:st;position:relative;padding:16px 18px 16px 62px;margin-bottom:11px;
-  background:var(--surface);border:1px solid var(--line);border-radius:11px;color:var(--ink-2);font-size:14.5px;line-height:1.55}
-.stagelist>li::before{content:"S" counter(st);position:absolute;left:16px;top:15px;
-  font-family:var(--mono);font-size:12px;font-weight:700;color:var(--gold);
-  border:1px solid var(--line);border-radius:6px;padding:3px 7px;line-height:1}
-.stagelist>li strong{color:var(--ink)}
-.stagelist>li .tag{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;
-  text-transform:uppercase;color:var(--violet-2);border:1px solid var(--line);border-radius:5px;
-  padding:2px 7px;margin-left:8px;vertical-align:1px}
+.card.soon{opacity:.5;pointer-events:none;border-style:dashed}
+
+/* ---------- hero progress ---------- */
+.phero{border:1px solid var(--line);border-radius:16px;background:var(--surface);
+  padding:24px 26px;margin-bottom:22px}
+.phead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;margin-bottom:16px}
+.pbig{font-family:var(--serif);font-size:clamp(30px,4vw,44px);color:var(--ink);line-height:1}
+.pbig em{font-style:normal;color:var(--st-done)}
+.psub{font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--ink-3);text-transform:uppercase}
+.ptarget{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--gold);
+  border:1px solid var(--line);border-radius:7px;padding:6px 11px}
+.pbar{height:14px;border-radius:8px;background:var(--void-2);border:1px solid var(--line);
+  overflow:hidden;display:flex}
+.pbar span{display:block;height:100%}
+.pbar .seg-done{background:linear-gradient(90deg,#4ec9a5,#63dbb6)}
+.pbar .seg-active{background:linear-gradient(90deg,#e7b24c,#f4d287)}
+
+/* ---------- pipeline strip ---------- */
+.pipe{display:grid;grid-template-columns:repeat(9,1fr);gap:7px;margin-top:18px}
+.pipe a{display:block;text-decoration:none;border:1px solid var(--line);border-radius:9px;
+  padding:9px 6px 10px;text-align:center;background:var(--void-2);transition:transform .12s,border-color .12s}
+.pipe a:hover{transform:translateY(-2px);border-color:var(--gold)}
+.pipe .pn{display:block;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.04em}
+.pipe .pt{display:block;font-size:10.5px;color:var(--ink-3);margin-top:3px;line-height:1.25;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pipe .bar{display:block;height:4px;border-radius:3px;margin-top:7px;background:rgba(255,255,255,.07)}
+.pipe .bar i{display:block;height:100%;border-radius:3px}
+.p-done{border-color:rgba(78,201,165,.45)!important;background:var(--st-done-dim)!important}
+.p-done .pn{color:var(--st-done)} .p-done .bar i{background:var(--st-done)}
+.p-active{border-color:rgba(231,178,76,.55)!important;background:var(--st-active-dim)!important}
+.p-active .pn{color:var(--st-active)} .p-active .bar i{background:var(--st-active)}
+.p-gate{border-color:rgba(240,163,94,.5)!important;background:var(--st-gate-dim)!important;border-style:dashed!important}
+.p-gate .pn{color:var(--st-gate)} .p-gate .bar i{background:var(--st-gate)}
+.p-pending{border-style:dashed!important} .p-pending .pn{color:var(--st-pending)}
+.p-pending .bar i{background:var(--st-pending)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:16px 0 0;
+  font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--ink-3);text-transform:uppercase}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block;border:1px solid transparent}
+.lg-done{background:var(--st-done)} .lg-active{background:var(--st-active)}
+.lg-gate{background:var(--st-gate)} .lg-pending{background:transparent;border-color:var(--st-pending)!important;border-style:dashed!important}
+
+/* ---------- stage cards ---------- */
+.stages{display:grid;gap:14px;margin-top:6px}
+.stage{border:1px solid var(--line);border-radius:13px;background:var(--surface);padding:19px 22px 17px;
+  scroll-margin-top:16px}
+.stage.s-done{border-color:rgba(78,201,165,.34)}
+.stage.s-active{border-color:rgba(231,178,76,.5);background:linear-gradient(180deg,rgba(231,178,76,.05),transparent 40%)}
+.stage.s-gate{border-color:rgba(240,163,94,.45);border-style:dashed}
+.stage.s-pending{border-style:dashed;opacity:.92}
+.shead{display:flex;flex-wrap:wrap;align-items:center;gap:9px 12px;margin-bottom:5px}
+.snum{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--gold);
+  border:1px solid var(--line);border-radius:6px;padding:3px 8px;line-height:1}
+.stitle{font-family:var(--serif);font-size:19px;color:var(--ink);line-height:1.2;margin:0}
+.pill{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  border-radius:20px;padding:3px 10px;border:1px solid transparent}
+.pill-done{color:var(--st-done);background:var(--st-done-dim);border-color:rgba(78,201,165,.4)}
+.pill-active{color:var(--st-active);background:var(--st-active-dim);border-color:rgba(231,178,76,.45)}
+.pill-gate{color:var(--st-gate);background:var(--st-gate-dim);border-color:rgba(240,163,94,.45)}
+.pill-pending{color:var(--st-pending);border-color:var(--line);border-style:dashed}
+.owner{font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--violet-2);border:1px solid var(--line);border-radius:5px;padding:3px 8px}
+.swin{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
+.ssum{font-size:13.5px;color:var(--ink-2);margin:0 0 13px;line-height:1.55;max-width:100ch}
+.sbarwrap{display:flex;align-items:center;gap:11px;margin-bottom:13px}
+.sbar{flex:1;height:7px;border-radius:5px;background:var(--void-2);border:1px solid var(--line);overflow:hidden}
+.sbar i{display:block;height:100%;border-radius:5px}
+.s-done .sbar i{background:var(--st-done)} .s-active .sbar i{background:var(--st-active)}
+.s-gate .sbar i{background:var(--st-gate)} .s-pending .sbar i{background:var(--st-pending)}
+.spct{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);min-width:38px;text-align:right}
+.tasks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.tasks li{position:relative;padding-left:25px;font-size:13.5px;line-height:1.52;color:var(--ink-2)}
+.tasks li::before{position:absolute;left:0;top:0;font-family:var(--mono);font-size:12px}
+.tasks li.t-done::before{content:"\2713";color:var(--st-done)}
+.tasks li.t-part::before{content:"\25D0";color:var(--st-active)}
+.tasks li.t-todo::before{content:"\25CB";color:var(--st-pending)}
+.tasks li.t-done{color:var(--ink)}
+.tasks li a{color:var(--ink);border-bottom:1px dotted rgba(78,201,165,.5)}
+.tasks li a:hover{color:var(--st-done);border-bottom-color:var(--st-done)}
+.tasks li .note{font-family:var(--mono);font-size:10.5px;color:var(--st-active);
+  border:1px solid var(--line);border-radius:5px;padding:1px 6px;margin-left:7px;white-space:nowrap}
+.tasks li .who{font-family:var(--mono);font-size:10px;color:var(--violet-2);margin-left:6px}
+.slinks{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px}
+.slinks a{font-family:var(--mono);font-size:11.5px;color:var(--st-done);border:1px solid rgba(78,201,165,.35);
+  background:var(--st-done-dim);border-radius:7px;padding:6px 11px;text-decoration:none}
+.slinks a:hover{border-color:var(--st-done);color:#fff}
+
+@media(max-width:820px){ .pipe{grid-template-columns:repeat(5,1fr)} }
+@media(max-width:560px){
+  .pipe{grid-template-columns:repeat(3,1fr)}
+  .swin{margin-left:0;width:100%}
+  .pipe .pt{display:none}
+}
 </style>
 </head>
 <body>
@@ -186,7 +277,7 @@ footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--line-soft);
   <header class="mast">
     <p class="eyebrow">Private Working Set<span class="dot">&bull;</span>Astrology Funnel Build<span class="dot">&bull;</span>Confidential</p>
     <h1>Astrology Funnel Build — Private Working Set</h1>
-    <p class="sub">Everything on this business in one place: the original funnel teardown, the 238-search competitor scan, and the Stage-1 deep research. <strong>Solo build, one VA.</strong> Target: first funnel live to paywall in one geo.</p>
+    <p class="sub">Everything on this business in one place, plus live build progress. <strong>Solo build, one VA.</strong> Target: first funnel live to paywall across six English geos.</p>
     <hr class="rule">
     <div class="chips"><span class="chip">13 funnels traced to paywall</span><span class="chip">238 Ads-Library searches · 28 countries</span><span class="chip">1,097 advertiser Pages</span><span class="chip">Western/tropical · web Stripe</span><span class="chip">trial → $14.99/wk → $39.99/mo</span></div>
     <p style="margin:18px 0 0;font-size:13.5px;color:var(--ink-3)">Private working set &mdash; not linked from anywhere, not indexed, separate account.</p>
@@ -196,26 +287,178 @@ footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--line-soft);
     <header class="sec-head">
       <span class="sec-idx">&sect;01</span>
       <div class="sec-titles">
-        <h2>The research</h2>
-        <p class="sec-desc">Everything gathered so far. Each document is self-contained.</p>
+        <h2>Build progress</h2>
+        <p class="sec-desc">Nine stages from recon to launch. Every percentage is calculated from the task list below it &mdash; nothing here is typed by hand.</p>
       </div>
     </header>
-    <div class="hubgrid"><a class="card" href="teardown/"><p class="ct">Funnel teardown + build blueprint</p><p class="cd">The original dossier. 6 advertisers, <strong>13 end-to-end funnel walks</strong> to the paywall (never a card), 7 data tables, the chart-API comparison and the 7-stage build pipeline.</p><span class="cm">Copy of the shared page · self-contained</span></a><a class="card" href="scan/"><p class="ct">Competitor scan + partner analysis</p><p class="cd">238 Ads-Library keyword searches across 28 countries → 2,315 ads → 534 brands. The burner-Page fleet finding, the true scale board, and the go-alone reasoning.</p><span class="cm">Includes §10 partner-or-solo</span></a><a class="card soon" href="#"><p class="ct">Stage 1 — Deep competitor research</p><p class="cd">28 per-competitor dossiers, 6 full funnel walks, 10 cross-cutting studies (pricing · email · creatives · chart APIs · palmistry · upsells · ad-ops · legal · funnel UX · tech build), adversarially verified.</p><span class="cm">Running now — 50 agents</span></a><a class="card soon" href="#"><p class="ct">FOUNDATION — the single source of truth</p><p class="cd">Everything above compressed into one document: market, per-competitor intel, our funnel spec screen by screen, our exact ladder, creative library, email programme, tech spec, ad ops, legal risk register, staged launch plan.</p><span class="cm">Lands with Stage 1</span></a></div>
+    <div class="phero">
+  <div class="phead">
+    <span class="pbig"><em>14%</em></span>
+    <span class="psub">1 of 9 stages complete &nbsp;&bull;&nbsp; updated 2026-07-23</span>
+    <span class="ptarget">Launch target 2026-08-06 &middot; 14 days</span>
+  </div>
+  <div class="pbar" role="img" aria-label="Overall progress 14 percent">
+    <span class="seg-done" style="width:14%"></span>
+  </div>
+  <div class="pipe"><a class="p-done" href="#stage-0" title="Stage 0 — Recon &amp; competitor scan: Complete, 100%"><span class="pn">S0</span><span class="pt">Recon &amp; competitor scan</span><span class="bar"><i style="width:100%"></i></span></a><a class="p-active" href="#stage-1" title="Stage 1 — Deep competitor research: In progress, 27%"><span class="pn">S1</span><span class="pt">Deep competitor research</span><span class="bar"><i style="width:27%"></i></span></a><a class="p-pending" href="#stage-2" title="Stage 2 — Offer, brand &amp; funnel spec: Not started, 0%"><span class="pn">S2</span><span class="pt">Offer, brand &amp; funnel spec</span><span class="bar"><i style="width:0%"></i></span></a><a class="p-pending" href="#stage-3" title="Stage 3 — Tech build: Not started, 0%"><span class="pn">S3</span><span class="pt">Tech build</span><span class="bar"><i style="width:0%"></i></span></a><a class="p-pending" href="#stage-4" title="Stage 4 — Creative &amp; ad ops: Not started, 0%"><span class="pn">S4</span><span class="pt">Creative &amp; ad ops</span><span class="bar"><i style="width:0%"></i></span></a><a class="p-pending" href="#stage-5" title="Stage 5 — Email &amp; retention: Not started, 0%"><span class="pn">S5</span><span class="pt">Email &amp; retention</span><span class="bar"><i style="width:0%"></i></span></a><a class="p-gate" href="#stage-6" title="Stage 6 — Legal &amp; billing hardening: Hard gate, 0%"><span class="pn">S6</span><span class="pt">Legal &amp; billing hardening</span><span class="bar"><i style="width:0%"></i></span></a><a class="p-pending" href="#stage-7" title="Stage 7 — Soft launch — tiered geos: Not started, 0%"><span class="pn">S7</span><span class="pt">Soft launch — tiered geos</span><span class="bar"><i style="width:0%"></i></span></a><a class="p-pending" href="#stage-8" title="Stage 8 — Read the data → scale, kill or pivot: Not started, 0%"><span class="pn">S8</span><span class="pt">Read the data → scale, kill or pivot</span><span class="bar"><i style="width:0%"></i></span></a></div>
+  <div class="legend">
+    <span><i class="lg-done"></i>Complete</span>
+    <span><i class="lg-active"></i>In progress</span>
+    <span><i class="lg-gate"></i>Hard gate</span>
+    <span><i class="lg-pending"></i>Not started</span>
+  </div>
+</div>
+    <div class="stages"><section class="stage s-done" id="stage-0">
+  <div class="shead">
+    <span class="snum">S0</span>
+    <h3 class="stitle">Recon &amp; competitor scan</h3>
+    <span class="pill pill-done">Complete</span>
+    <span class="owner">Claude</span>
+    <span class="swin">Jul 21–22</span>
+  </div>
+  <p class="ssum">Map the category from scratch: who is running these funnels, how they work end to end, and who the real players are.</p>
+  <div class="sbarwrap">
+    <div class="sbar" role="img" aria-label="Stage 0 100 percent complete"><i style="width:100%"></i></div>
+    <span class="spct">100%</span>
+  </div>
+  <ul class="tasks"><li class="t-done"><a href="teardown/">6 advertiser Pages captured from the FB Ads Library</a></li><li class="t-done"><a href="teardown/">13 funnels traced end-to-end to the paywall (never a card)</a></li><li class="t-done"><a href="teardown/">Build blueprint + chart-API comparison</a></li><li class="t-done"><a href="scan/">238 keyword searches across 28 countries</a></li><li class="t-done"><a href="scan/">2,315 ads → 1,097 advertiser Pages → 534 brands</a></li><li class="t-done"><a href="scan/">Burner-Page fleet finding (Astroline runs 4 Pages → 1 domain)</a></li><li class="t-done"><a href="scan/">Partner-or-solo decision → go alone + VA</a></li><li class="t-done">Processor decision → Stripe yes, PayPal no</li><li class="t-done">Operator entity + jurisdiction diligence (Cyprus/Estonia/UAE pattern)</li></ul>
+  <div class="slinks"><a href="teardown/">Funnel teardown + blueprint &rarr;</a><a href="scan/">Competitor scan &rarr;</a></div>
+</section><section class="stage s-active" id="stage-1">
+  <div class="shead">
+    <span class="snum">S1</span>
+    <h3 class="stitle">Deep competitor research</h3>
+    <span class="pill pill-active">In progress</span>
+    <span class="owner">Claude</span>
+    <span class="swin">Jul 22–23</span>
+  </div>
+  <p class="ssum">Fan out across every competitor found, verify adversarially, and compress it into one foundation document.</p>
+  <div class="sbarwrap">
+    <div class="sbar" role="img" aria-label="Stage 1 27 percent complete"><i style="width:27%"></i></div>
+    <span class="spct">27%</span>
+  </div>
+  <ul class="tasks"><li class="t-part">28 per-competitor deep dossiers<span class="note">18 of 28 returned</span></li><li class="t-todo">6 full funnel walks to paywall (Astroline, tryastro, Hint, Nebula, Psychic Marie, Spiritual Society)</li><li class="t-todo">10 cross-cutting studies — pricing · email · creatives · chart APIs · palmistry · upsells · ad-ops · legal · funnel UX · tech build</li><li class="t-todo">5 adversarial refutations of the load-bearing claims</li><li class="t-todo">FOUNDATION.md — everything merged into one source of truth</li><li class="t-done">Entity &amp; Stripe diligence note</li></ul>
+  
+</section><section class="stage s-pending" id="stage-2">
+  <div class="shead">
+    <span class="snum">S2</span>
+    <h3 class="stitle">Offer, brand &amp; funnel spec</h3>
+    <span class="pill pill-pending">Not started</span>
+    <span class="owner">Bob + Claude</span>
+    <span class="swin">Jul 24–25</span>
+  </div>
+  <p class="ssum">Lock the name, the domain, the exact price ladder and the screen-by-screen funnel — precise enough to build from with no further decisions.</p>
+  <div class="sbarwrap">
+    <div class="sbar" role="img" aria-label="Stage 2 0 percent complete"><i style="width:0%"></i></div>
+    <span class="spct">0%</span>
+  </div>
+  <ul class="tasks"><li class="t-todo">Domain shortlist — bulk hunt prefixed .com + alt-TLDs (the .com/.app/.co space is exhausted)</li><li class="t-todo">Domain chosen and purchased<span class="who">[Bob]</span></li><li class="t-todo">Brand identity — name, mark, tone of voice</li><li class="t-todo">Price ladder locked — $0.99 trial → $14.99/wk → $39.99/mo</li><li class="t-todo">Screen-by-screen quiz spec with real question wording</li><li class="t-todo">Reveal choreography + paywall layout</li><li class="t-todo">Geo set confirmed — US · CA · UK · AU · IE · NZ</li></ul>
+  
+</section><section class="stage s-pending" id="stage-3">
+  <div class="shead">
+    <span class="snum">S3</span>
+    <h3 class="stitle">Tech build</h3>
+    <span class="pill pill-pending">Not started</span>
+    <span class="owner">Claude</span>
+    <span class="swin">Jul 25–Aug 1</span>
+  </div>
+  <p class="ssum">The long pole. Next.js + Supabase on Vercel — the stack every traced competitor uses.</p>
+  <div class="sbarwrap">
+    <div class="sbar" role="img" aria-label="Stage 3 0 percent complete"><i style="width:0%"></i></div>
+    <span class="spct">0%</span>
+  </div>
+  <ul class="tasks"><li class="t-todo">Next.js + Supabase scaffold on Vercel</li><li class="t-todo">Quiz engine with persisted state</li><li class="t-todo">Birth-data capture + geocoder returning lat/lon/IANA timezone</li><li class="t-todo">Chart engine integration (primary + fallback)</li><li class="t-todo">Claude reading generator</li><li class="t-todo">Stripe products, prices, subscription with trial</li><li class="t-todo">Webhooks — renewal, dunning, cancellation</li><li class="t-todo">Reading delivery + customer account</li><li class="t-todo">Analytics — PostHog + Meta Pixel + CAPI</li><li class="t-todo">Legal pages — terms, privacy, refund, disclaimer</li><li class="t-todo">EXIT TEST: funnel live to paywall on staging, test-mode subscription completes</li></ul>
+  
+</section><section class="stage s-pending" id="stage-4">
+  <div class="shead">
+    <span class="snum">S4</span>
+    <h3 class="stitle">Creative &amp; ad ops</h3>
+    <span class="pill pill-pending">Not started</span>
+    <span class="owner">Bob + Claude</span>
+    <span class="swin">Jul 28–Aug 3</span>
+  </div>
+  <p class="ssum">Runs in parallel with the build. This is the stage the VA can own most of.</p>
+  <div class="sbarwrap">
+    <div class="sbar" role="img" aria-label="Stage 4 0 percent complete"><i style="width:0%"></i></div>
+    <span class="spct">0%</span>
+  </div>
+  <ul class="tasks"><li class="t-todo">15–20 creative concepts off the ranked hook library</li><li class="t-todo">Creative production<span class="who">[VA]</span></li><li class="t-todo">Business Manager + persona Page fleet (Astroline pattern)</li><li class="t-todo">Pixel + CAPI verified firing</li><li class="t-todo">Domain verification in Meta</li><li class="t-todo">Ad account warm-up sequence<span class="who">[VA]</span></li><li class="t-todo">Tiered ad sets built — Tier A US/CA/UK/AU, Tier B IE/NZ, never merged</li></ul>
+  
+</section><section class="stage s-pending" id="stage-5">
+  <div class="shead">
+    <span class="snum">S5</span>
+    <h3 class="stitle">Email &amp; retention</h3>
+    <span class="pill pill-pending">Not started</span>
+    <span class="owner">Bob + Claude</span>
+    <span class="swin">Aug 1–3</span>
+  </div>
+  <p class="ssum">Must exist before traffic, not after. No spam — cadence designed around value, not volume.</p>
+  <div class="sbarwrap">
+    <div class="sbar" role="img" aria-label="Stage 5 0 percent complete"><i style="width:0%"></i></div>
+    <span class="spct">0%</span>
+  </div>
+  <ul class="tasks"><li class="t-todo">ESP selected and wired</li><li class="t-todo">SPF / DKIM / DMARC passing</li><li class="t-todo">Welcome + reading delivery sequence</li><li class="t-todo">Trial → paid conversion sequence</li><li class="t-todo">Pre-rebill notice (legally protective and reduces disputes)</li><li class="t-todo">Dunning / failed-payment recovery</li><li class="t-todo">Win-back sequence</li><li class="t-todo">EXIT TEST: every sequence test-fired and landing in inbox</li></ul>
+  
+</section><section class="stage s-gate" id="stage-6">
+  <div class="shead">
+    <span class="snum">S6</span>
+    <h3 class="stitle">Legal &amp; billing hardening</h3>
+    <span class="pill pill-gate">Hard gate</span>
+    <span class="owner">Bob + Claude</span>
+    <span class="swin">Aug 3–4</span>
+  </div>
+  <p class="ssum">HARD GATE. No traffic until every item passes. This is what keeps the Stripe account alive.</p>
+  <div class="sbarwrap">
+    <div class="sbar" role="img" aria-label="Stage 6 0 percent complete"><i style="width:0%"></i></div>
+    <span class="spct">0%</span>
+  </div>
+  <ul class="tasks"><li class="t-todo">Renewal price + cadence stated above the pay button (Stripe-safe disclosure)</li><li class="t-todo">One-click cancellation flow</li><li class="t-todo">Refund policy + response SLA</li><li class="t-todo">Terms, privacy, 'for entertainment purposes only' disclaimer</li><li class="t-todo">Stripe statement descriptor + dispute tooling</li><li class="t-todo">Geo-block JP / MX / TH / UAE (Stripe restricts this vertical there)</li><li class="t-todo">Notify Stripe of the new business line rather than let them discover it<span class="who">[Bob]</span></li><li class="t-todo">EXIT TEST: full compliance review passed</li></ul>
+  
+</section><section class="stage s-pending" id="stage-7">
+  <div class="shead">
+    <span class="snum">S7</span>
+    <h3 class="stitle">Soft launch — tiered geos</h3>
+    <span class="pill pill-pending">Not started</span>
+    <span class="owner">Bob + Claude</span>
+    <span class="swin">Aug 5–6</span>
+  </div>
+  <p class="ssum">The 2-week target. Small budget, real traffic, one hook. Goal is signal, not scale.</p>
+  <div class="sbarwrap">
+    <div class="sbar" role="img" aria-label="Stage 7 0 percent complete"><i style="width:0%"></i></div>
+    <span class="spct">0%</span>
+  </div>
+  <ul class="tasks"><li class="t-todo">Tier A ad sets live — US / CA / UK / AU</li><li class="t-todo">Tier B ad sets live — IE / NZ</li><li class="t-todo">Small daily budget approved and spending<span class="who">[Bob]</span></li><li class="t-todo">Funnel instrumented: quiz completion → email → paywall view → trial → paid</li><li class="t-todo">EXIT TEST: first real conversion data in hand</li></ul>
+  
+</section><section class="stage s-pending" id="stage-8">
+  <div class="shead">
+    <span class="snum">S8</span>
+    <h3 class="stitle">Read the data → scale, kill or pivot</h3>
+    <span class="pill pill-pending">Not started</span>
+    <span class="owner">Bob + Claude</span>
+    <span class="swin">Aug 7+</span>
+  </div>
+  <p class="ssum">Decisions made on numbers, not vibes. Only now do the deferred features earn their place.</p>
+  <div class="sbarwrap">
+    <div class="sbar" role="img" aria-label="Stage 8 0 percent complete"><i style="width:0%"></i></div>
+    <span class="spct">0%</span>
+  </div>
+  <ul class="tasks"><li class="t-todo">Fix the worst drop-off point</li><li class="t-todo">Second hook + second creative batch</li><li class="t-todo">Upsell ladder decision</li><li class="t-todo">Palmistry include / exclude decision</li><li class="t-todo">Offshore billing-entity review (tax + liability isolation)</li><li class="t-todo">DECISION: scale, kill or pivot<span class="who">[Bob]</span></li></ul>
+  
+</section></div>
   </section>
 
   <section class="sec">
     <header class="sec-head">
       <span class="sec-idx">&sect;02</span>
       <div class="sec-titles">
-        <h2>Stages to clear before launch</h2>
-        <p class="sec-desc">One stage at a time. Nothing in a later stage starts until the one before it is signed off.</p>
+        <h2>The research</h2>
+        <p class="sec-desc">Everything gathered so far. Each document is self-contained.</p>
       </div>
     </header>
-    <ol class="stagelist"><li><strong>Stage 1 — Deep competitor research</strong><span class="tag">running now</span><br>28 competitor dossiers + 6 full funnel walks + 10 cross-cutting studies + adversarial verification, compressed into <strong>FOUNDATION.md</strong>. This is the evidence base everything else rests on. <strong>Deliverable:</strong> the foundation document. <strong>Nothing gets built until this is read and signed off.</strong></li><li><strong>Stage 2 — Offer &amp; funnel spec</strong><span class="tag">after S1 sign-off</span><br>Lock the exact ladder (trial price → $14.99/wk → $39.99/mo), the screen-by-screen quiz spec with real question wording, the reveal choreography and the paywall layout. <strong>Deliverable:</strong> a spec precise enough to build from without further decisions.</li><li><strong>Stage 3 — Tech build</strong><span class="tag">the long pole</span><br>Next.js funnel, quiz state, birth-data capture with lat/lon/timezone geocoding, chart-engine integration, the Claude reading generator, Stripe subscription + trial, webhooks for renewal and dunning, analytics. <strong>Deliverable:</strong> funnel live to paywall on a staging domain.</li><li><strong>Stage 4 — Creative &amp; ad ops</strong><span class="tag">parallel with S3</span><br>First creative batch off the ranked hook library, Business Manager / Page-fleet structure, pixel + CAPI, domain verification, warm-up sequence. <strong>Deliverable:</strong> ad account ready and creatives approved. This is the stage the VA can own most of.</li><li><strong>Stage 5 — Email &amp; retention</strong><span class="tag">before first spend</span><br>ESP wired, SPF/DKIM/DMARC passing, welcome + reading-delivery + trial-conversion + pre-rebill + dunning + win-back sequences written. <strong>Deliverable:</strong> every automated email live and tested. Must exist before traffic, not after.</li><li><strong>Stage 6 — Legal &amp; billing hardening</strong><span class="tag">gate before spend</span><br>Disclaimer wording, auto-renew disclosure that satisfies ROSCA / California ARL, one-click cancel, refund policy, terms/privacy, Stripe descriptor and dispute tooling. <strong>Deliverable:</strong> a billing setup that will not get the Stripe account frozen. <strong>Hard gate — no traffic until this passes.</strong></li><li><strong>Stage 7 — Soft launch, one geo</strong><span class="tag">the 2-week target</span><br>Small daily budget, one geo, one hook, real traffic. Watch quiz completion, email capture, paywall view, trial start, then trial→paid. <strong>Deliverable:</strong> the first real conversion data. Not scale — signal.</li><li><strong>Stage 8 — Read the data, then scale</strong><span class="tag">after signal</span><br>Fix the worst drop-off, add the second hook and the second geo, then the upsell ladder and the palmistry add-on if Stage 1 says it earns its friction. <strong>Deliverable:</strong> a decision to scale, kill or pivot — made on numbers.</li></ol>
+    <div class="hubgrid"><a class="card" href="teardown/"><p class="ct">Funnel teardown + build blueprint</p><p class="cd">The original dossier. 6 advertisers, <strong>13 end-to-end funnel walks</strong> to the paywall (never a card), 7 data tables, the chart-API comparison and the 7-stage build pipeline.</p><span class="cm">Copy of the shared page · self-contained</span></a><a class="card" href="scan/"><p class="ct">Competitor scan + partner analysis</p><p class="cd">238 Ads-Library keyword searches across 28 countries → 2,315 ads → 534 brands. The burner-Page fleet finding, the true scale board, and the go-alone reasoning.</p><span class="cm">Includes §10 partner-or-solo</span></a><a class="card soon" href="#"><p class="ct">Stage 1 — Deep competitor research</p><p class="cd">28 per-competitor dossiers, 6 full funnel walks, 10 cross-cutting studies (pricing · email · creatives · chart APIs · palmistry · upsells · ad-ops · legal · funnel UX · tech build), adversarially verified.</p><span class="cm">Running now — 18 of 28 dossiers in</span></a><a class="card soon" href="#"><p class="ct">FOUNDATION — the single source of truth</p><p class="cd">Everything above compressed into one document: market, per-competitor intel, our funnel spec screen by screen, our exact ladder, creative library, email programme, tech spec, ad ops, legal risk register, staged launch plan.</p><span class="cm">Lands when Stage 1 completes</span></a></div>
   </section>
 
   <footer>
-    <span>Prepared 2026-07-22 &nbsp;&bull;&nbsp; Confidential &mdash; private working set</span>
+    <span>Updated 2026-07-23 &nbsp;&bull;&nbsp; Confidential &mdash; private working set</span>
     <span>noindex &bull; not for redistribution</span>
   </footer>
 
